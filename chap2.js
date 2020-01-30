@@ -89,7 +89,7 @@ const compress = (str, threshold = 4) => {
   return (charCount > 1) ? encode(output, lastChar, charCount) : output ;
 };
 
-compress("hello lljjj ");
+compress("hello lljjj "); // 'he~Blo ~Bl~Cj '
 
 const decompress = str => {
   let lastChar = '';
@@ -108,8 +108,8 @@ const decompress = str => {
   return output;
 };
 
-decompress('hello ~Gn~Cj');
-decompress(compress("hello lljjj "));
+decompress('hello ~Gn~Cj'); // 'hello nnnnnnnjjj'
+decompress(compress("hello lljjj ")); // 'hello nnnnnnnjjj'
 
 const makeSet = range => {
   let outputSet = [];
@@ -131,9 +131,31 @@ const makeSet = range => {
   return outputSet;
 }
 
-makeSet('kje')
-makeSet('a-zA-Z')
-makeSet('h-za-gC-ZAB')
+makeSet('kje'); // [ 'k', 'j', 'e' ]
+makeSet('a-zA-Z');
+// [
+//   'a', 'b', 'c', 'd', 'e', 'f',
+//   'g', 'h', 'i', 'j', 'k', 'l',
+//   'm', 'n', 'o', 'p', 'q', 'r',
+//   's', 't', 'u', 'v', 'w', 'x',
+//   'y', 'z', 'A', 'B', 'C', 'D',
+//   'E', 'F', 'G', 'H', 'I', 'J',
+//   'K', 'L', 'M', 'N', 'O', 'P',
+//   'Q', 'R', 'S', 'T', 'U', 'V',
+//   'W', 'X', 'Y', 'Z'
+// ]
+makeSet('h-za-gC-ZAB');
+// [
+//   'h', 'i', 'j', 'k', 'l', 'm',
+//   'n', 'o', 'p', 'q', 'r', 's',
+//   't', 'u', 'v', 'w', 'x', 'y',
+//   'z', 'a', 'b', 'c', 'd', 'e',
+//   'f', 'g', 'C', 'D', 'E', 'F',
+//   'G', 'H', 'I', 'J', 'K', 'L',
+//   'M', 'N', 'O', 'P', 'Q', 'R',
+//   'S', 'T', 'U', 'V', 'W', 'X',
+//   'Y', 'Z', 'A', 'B'
+// ]
 
 const translit = ({ str, from, to }) => {
   const fromset = makeSet(from);
@@ -154,6 +176,8 @@ const translit = ({ str, from, to }) => {
   return output;
 };
 
-const ccp = translit({ str: "Hello World", from: "a-zA-Z", to: "h-za-gC-ZAB"})
-ccp
-translit({ str: ccp, to: "a-zA-Z", from: "h-za-gC-ZAB"})
+const ccp = translit({ str: "Hello World", from: "a-zA-Z", to: "h-za-gC-ZAB"});
+// 'Jlssv Yvysk'
+
+translit({ str: ccp, to: "a-zA-Z", from: "h-za-gC-ZAB"});
+// 'Hello World'
